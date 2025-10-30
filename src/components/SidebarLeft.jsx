@@ -4,7 +4,7 @@ import EventIcon from "@mui/icons-material/Event";
 import PeopleIcon from "@mui/icons-material/People";
 import BuildIcon from "@mui/icons-material/Build";
 import GroupIcon from "@mui/icons-material/Group";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { Menu } from "lucide-react";
 import {
   Sidebar,
@@ -41,22 +41,24 @@ const data = {
   ],
 };
 
-export function SidebarLeft(props) {
+function SidebarLeft(props) {
   const { open, toggleSidebar } = useSidebar();
+  const location = useLocation();
 
   return (
     <div className="!bg-[#0F3B2E] h-full">
       <Sidebar
         collapsible="icon"
-        className="!bg-[#032212] text-white h-full"
+        className={`!bg-[#032212] text-white h-full transition-all duration-300 ${
+          open ? "w-[280px]" : "!w-[90px]"
+        }`}
         {...props}
       >
-        {/* ====== Header ====== */}
         <SidebarHeader className="!bg-[#032212] !text-white">
           <div className="flex items-center justify-between px-3 py-4">
             <div
               onClick={toggleSidebar}
-              className="flex items-center justify-center h-12 w-full cursor-pointer"
+              className="flex items-center justify-center h-12 w-[200px] !pl-[20px] cursor-pointer"
             >
               {open ? (
                 <img
@@ -65,20 +67,7 @@ export function SidebarLeft(props) {
                   className="object-contain transition-all duration-300 h-10 w-auto"
                 />
               ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-white"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
+                <img src="#" alt="Logo" />
               )}
             </div>
 
@@ -86,53 +75,57 @@ export function SidebarLeft(props) {
           </div>
         </SidebarHeader>
 
-        {/* ====== Sidebar Content ====== */}
         <SidebarContent className="!bg-[#032212] !text-white">
-          <div className={`px-3 mb-2 transition-all duration-300 ${open ? "" : "h-6"}`}>
-            {open && <h2 className="text-sm text-white font-semibold">Main</h2>}
+          <div
+            className={'px-3 mb-2 transition-all duration-300'}
+          >
+            {open && (
+              <h2 className="text-md text-white font-[700] !pl-[15px]">Main</h2>
+            )}
           </div>
 
           <div
-            className={`flex flex-col gap-1 ${open ? "px-3 py-2" : ""} transition-all duration-300`}
+            className={`flex flex-col gap-1 ${
+              open ? "px-3 py-2" : ""
+            } transition-all duration-300`}
           >
-{data.navMain.map((item, index) => {
-  const isActive = index === 0;
-  const Icon = item.icon;
+            {data.navMain.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.url;
 
-  return (
-    <Link
-      key={item.title}
-      to={item.url}
-      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition-colors duration-300
-        ${
-          isActive
-            ? "text-[oklch(83.98%_.195_124.9)]"
-            : "text-white hover:text-[oklch(83.98%_.195_124.9)]"
-        }`}
-    >
-      <Icon
-        fontSize="small"
-        className={`transition-colors duration-300 ${
-          isActive
-            ? "text-[oklch(83.98%_.195_124.9)]"
-            : "text-white hover:text-[oklch(83.98%_.195_124.9)]"
-        }`}
-      />
-      {open && (
-        <span
-          className={`transition-colors duration-300 ${
-            isActive
-              ? "text-[oklch(83.98%_.195_124.9)]"
-              : "text-white hover:text-[oklch(83.98%_.195_124.9)]"
-          }`}
-        >
-          {item.title}
-        </span>
-      )}
-    </Link>
-  );
-})}
-
+              return (
+                <Link
+                  key={item.title}
+                  to={item.url}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-300 !pl-[25px]
+                    ${
+                      isActive
+                        ? "text-[oklch(83.98%_.195_124.9)]"
+                        : "text-white hover:text-[oklch(83.98%_.195_124.9)]"
+                    }`}
+                >
+                  <Icon
+                    fontSize="medium"
+                    className={`transition-colors duration-300 ${
+                      isActive
+                        ? "text-[oklch(83.98%_.195_124.9)]"
+                        : "text-white hover:text-[oklch(83.98%_.195_124.9)]"
+                    }`}
+                  />
+                  {open && (
+                    <span
+                      className={`transition-colors duration-300 text-lg ${
+                        isActive
+                          ? "text-[oklch(83.98%_.195_124.9)]"
+                          : "text-white hover:text-[oklch(83.98%_.195_124.9)]"
+                      }`}
+                    >
+                      {item.title}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
           </div>
         </SidebarContent>
         <SidebarRail />
@@ -140,3 +133,4 @@ export function SidebarLeft(props) {
     </div>
   );
 }
+export default SidebarLeft;

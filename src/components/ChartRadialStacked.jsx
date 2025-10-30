@@ -33,7 +33,7 @@ export function ChartRadialStacked() {
     <div className="bg-card text-card-foreground gap-6 rounded-xl flex flex-col p-4 !pt-0">
       <Card className="flex flex-col h-full">
         <CardContent className="flex flex-1 items-center justify-center pb-0">
-            <div className="h-[450px]">
+            <div className="h-[540px]">
           <ChartContainer
             config={chartConfig}
             className="mx-auto w-full max-w-[300px] !h-[450px]"
@@ -42,7 +42,7 @@ export function ChartRadialStacked() {
               data={chartData}
               endAngle={180}  
               innerRadius={100}
-              outerRadius={180}
+              outerRadius={190}
             >
               <ChartTooltip
                 cursor={false}

@@ -1,14 +1,42 @@
 import React, { useState } from "react";
-// import axios from "axios";
-// import toast from "react-hot-toast";
+import axios from "axios";
+import toast from "react-hot-toast";
 import PersonIcon from "@mui/icons-material/Person";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const handle = async (values) => {
+    const data = {
+      email: values.email,
+      password: values.password,
+    };
+    try {
+      const response = await axios.post(
+        "https://appoint-api.testingelmo.com/api/v1/en/admin/auth/login",
+        data
+      );
+  
+      const elmoToken = response.data.data.tokenDetails.token;
+      localStorage.setItem("token", elmoToken);
+      toast.success("Login Successfully!")
+      setTimeout(() => {
+        window.location.reload();
+        navigate("/Dashboard");
+      }, 500);
+  
+    } catch (error) {
+      console.log(error.response.data.message);
+      toast.error(`${error.response.data.message}`);
+    }
+  };
+  
+
+
 
   const login = Yup.object({
     email: Yup.string().email().required(),
@@ -35,9 +63,7 @@ const Login = () => {
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={login}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={handle}
         >
           <Form className="flex flex-col gap-3 relative">
             <label htmlFor="email" className="font-medium text-sm">
@@ -62,7 +88,7 @@ const Login = () => {
             </label>
             <div className="relative w-[400px]">
               <Field
-                type={showPassword ? "password" : "text"}
+                type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
                 placeholder="••••••••••"
@@ -75,7 +101,7 @@ const Login = () => {
                 onClick={() => setShowPassword((prev) => !prev)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700"
               >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
               </button>
             </div>
             <ErrorMessage
@@ -92,14 +118,12 @@ const Login = () => {
                 Forgot Password?
               </Link>
             </div>
-            <Link to="/dashboard">
             <button
               type="submit"
               className="w-full text-[oklch(83.98%_.195_124.9)] text-[1rem] font-[500] !px-[1.25rem] bg-[#032212] rounded-md flex justify-center items-center cursor-pointer h-[2.5rem] transition"
             >
               Sign in
             </button>
-            </Link>
           </Form>
         </Formik>
       </div>

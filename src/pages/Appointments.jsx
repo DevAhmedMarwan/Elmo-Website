@@ -3,20 +3,7 @@ import React from 'react'
 const Appointments = () => {
   return (
     <div className='pl-70'>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
-    <div>Appointmentsssssssssssssssssssssssssssssssssssss</div>
+      <h1>Appointments</h1>
     </div>
   )
 }
