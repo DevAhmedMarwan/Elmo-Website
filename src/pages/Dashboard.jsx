@@ -1,13 +1,16 @@
-import { SidebarProvider } from "@/components/ui/sidebar";
 import ContentChange from "@/components/ContentChange";
+import SidebarTop from './../components/SidebarTop';
 
 const Dashboard = () => {
   return (
-    <SidebarProvider>
-      <main className="transition-all duration-300">
+    <>
+      <div className="w-full h-0">
+        <SidebarTop  title="Dashboard"/>
+      </div>
+      <main className="transition-all duration-300 w-full">
         <ContentChange />
       </main>
-    </SidebarProvider>
+      </>
   );
 };
 

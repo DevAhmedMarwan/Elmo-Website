@@ -10,8 +10,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import axios from "axios";
-
-const SidebarTop = () => {
+const SidebarTop = ({ title, children }) => {
   const { open } = useSidebar();
   const navigate = useNavigate();
 
@@ -19,7 +18,7 @@ const SidebarTop = () => {
     name: "John Doe",
     email: "john@example.com",
     avatar:
-      "https://appoint-api.testingelmo.com/storage/avatars/1760405098_WhatsApp%20Image%202025-09-30%20at%2014.38.05.jpg",
+    "http://localhost:5173/image/ahmed.jpg",
   };
 
   const handleLogout = async () => {
@@ -36,8 +35,7 @@ const SidebarTop = () => {
       }
 
       const response = await axios.post(
-        "https://appoint-api.testingelmo.com/api/v1/en/admin/auth/logout",
-        {},
+        "https://appoint-api.testingelmo.com/api/v1/en/admin/auth/logout",{},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -74,39 +72,45 @@ const SidebarTop = () => {
         width: open ? "calc(100% - 280px)" : "calc(100% - 90px)",
       }}
     >
-      <h1 className="text-xl font-bold capitalize text-[#032212]">Dashboard</h1>
+      <div>
+        <h1 className="text-xl font-bold capitalize text-[#032212]">{title}</h1>
+      </div>
+      <div className="flex items-center justify-between gap-6 w-full overflow-hidden">
+        <div>{children}</div>
+        <div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center space-x-2 focus:outline-none">
+                <Avatar className="h-9 w-9 cursor-pointer">
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback>{user.name[0]}</AvatarFallback>
+                </Avatar>
+              </button>
+            </DropdownMenuTrigger>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className="flex items-center space-x-2 focus:outline-none">
-            <Avatar className="h-9 w-9 cursor-pointer">
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback>{user.name[0]}</AvatarFallback>
-            </Avatar>
-          </button>
-        </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              sideOffset={8}
+              className="w-47 rounded-lg p-1"
+            >
+              <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+                <User className="w-4 h-4" /> Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+                <Settings className="w-4 h-4" /> Settings
+              </DropdownMenuItem>
+              <hr />
 
-        <DropdownMenuContent
-          align="end"
-          sideOffset={8}
-          className="w-47 rounded-lg p-1"
-        >
-          <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-            <User className="w-4 h-4" /> Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-            <Settings className="w-4 h-4" /> Settings
-          </DropdownMenuItem>
-          <hr />
-
-          <DropdownMenuItem
-            onClick={handleLogout}
-            className="flex items-center gap-2 cursor-pointer text-red-500 focus:text-red-600 text-md font-[600]"
-          >
-            <LogOut className="w-4 h-4" /> sing out
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+              <DropdownMenuItem
+                onClick={handleLogout}
+                className="flex items-center gap-2 cursor-pointer text-red-500 focus:text-red-600 text-md font-[600]"
+              >
+                <LogOut className="w-4 h-4" /> sing out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
     </div>
   );
 };

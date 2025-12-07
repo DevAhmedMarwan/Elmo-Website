@@ -42,20 +42,18 @@ const ContentChange = () => {
 
     handle();
   }, []);
-
+  console.log(open);
+  
   return (
     <div
       className={`transition-all duration-500 ease-in-out min-h-screen absolute ${
-        open ? "!left-[280px]" : "!left-[90px] !top-0"
+        open ? "left-[280px]" : "left-[90px] !top-0"
       }`}
     >
       <main className="flex flex-col gap-6 p-6">
         {loading ? (
           <div className="flex justify-center w-full">
             {loadingAnimation()}
-            {/* <h3 className="text-xl text-muted-foreground font-semibold">
-  Loading dashboard data...
-  </h3> */}
           </div>
         ) : (
           <>

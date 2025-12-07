@@ -1,19 +1,14 @@
-import  SidebarLeft  from "./SidebarLeft";
-import SidebarTop from "./SidebarTop";
+import SidebarLeft from "./SidebarLeft";
 import { SidebarProvider } from "./ui/sidebar";
 
 const Header = () => {
   return (
     <div className="!h-[75px]">
-    <SidebarProvider>
-      <div className="flex w-full items-start !pt-[20px]">
-        <SidebarLeft />
-
-        <div className="w-full h-0">
-          <SidebarTop />
+      <SidebarProvider>
+        <div>
+          <SidebarLeft />
         </div>
-      </div>
-    </SidebarProvider>
+      </SidebarProvider>
     </div>
   );
 };
